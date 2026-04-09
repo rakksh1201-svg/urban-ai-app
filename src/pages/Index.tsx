@@ -36,7 +36,6 @@ const Index: React.FC = () => {
   const [lang, setLang] = useState<LangCode>('en');
   const [desktopTab, setDesktopTab] = useState<DesktopTab>('dashboard');
   const [mobileTab, setMobileTab] = useState<MobileTab>('dashboard');
-  const [showMobileCamera, setShowMobileCamera] = useState(false);
   const [selectedState, setSelectedState] = useState(STATE_LIST[0]);
   const [selectedCity, setSelectedCity] = useState(STATES_AND_CITIES[STATE_LIST[0]][0]);
   const [userId, setUserId] = useState<string | null>(null);
@@ -155,42 +154,18 @@ const Index: React.FC = () => {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-6 pb-28 md:pb-6">
+      <main className="max-w-7xl mx-auto px-4 py-6 pb-6">
         {/* Desktop: use desktopTab, Mobile: use mapped mobileTab */}
         <div className="hidden md:block">
           {renderContent(desktopTab)}
         </div>
         <div className="md:hidden">
-          {showMobileCamera ? (
-            <div className="space-y-3">
-              <button
-                onClick={() => setShowMobileCamera(false)}
-                className="text-sm text-primary font-semibold"
-              >
-                ← Back
-              </button>
-              {currentPrediction && (
-                <FieldCamera city={selectedCity} envScore={currentPrediction.envScore2025} lang={lang} userId={userId} />
-              )}
-            </div>
-          ) : (
-            renderContent(activeContentTab)
-          )}
+          {renderContent(activeContentTab)}
         </div>
       </main>
 
-      {/* Mobile FAB - Camera */}
-      {!showMobileCamera && (
-        <button
-          onClick={() => setShowMobileCamera(true)}
-          className="md:hidden fixed bottom-20 right-4 z-50 w-12 h-12 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 flex items-center justify-center transition-transform active:scale-90"
-        >
-          <Camera size={20} strokeWidth={2} />
-        </button>
-      )}
-
       {/* Mobile Bottom Nav */}
-      <BottomNav activeTab={mobileTab} onTabChange={(tab) => { setShowMobileCamera(false); setMobileTab(tab); }} lang={lang} />
+      <BottomNav activeTab={mobileTab} onTabChange={setMobileTab} lang={lang} />
     </div>
   );
 };
