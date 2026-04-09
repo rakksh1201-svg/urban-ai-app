@@ -9,16 +9,14 @@ import Trends from '../components/Trends';
 import MapView from '../components/MapView';
 import CoolingAdvisor from '../components/CoolingAdvisor';
 import AIChatbot from '../components/AIChatbot';
-import RoomClimate from '../components/RoomClimate';
 import Profile from '../components/Profile';
 import BottomNav, { type MobileTab } from '../components/BottomNav';
-import { ChevronDown, Camera } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
-type DesktopTab = 'dashboard' | 'trends' | 'map' | 'cooling' | 'ai' | 'climate';
+type DesktopTab = 'dashboard' | 'trends' | 'map' | 'cooling' | 'ai';
 
 const DESKTOP_TABS: { id: DesktopTab; icon: string; key: string }[] = [
   { id: 'dashboard', icon: '🏠', key: 'dashboard' },
-  { id: 'climate', icon: '🌡️', key: 'climate' },
   { id: 'trends', icon: '📈', key: 'trends' },
   { id: 'map', icon: '🗺️', key: 'map' },
   { id: 'cooling', icon: '🏢', key: 'cooling' },
@@ -84,11 +82,8 @@ const Index: React.FC = () => {
         return currentPrediction && (
           <div className="space-y-6">
             <Dashboard city={selectedCity} prediction={currentPrediction} lang={lang} />
-            <RoomClimate city={selectedCity} lang={lang} userId={userId} outdoorTemp={currentPrediction.temp2025} />
           </div>
         );
-      case 'climate':
-        return <RoomClimate city={selectedCity} lang={lang} userId={userId} outdoorTemp={currentPrediction?.temp2025} />;
       case 'trends':
         return currentPrediction && <Trends city={selectedCity} prediction={currentPrediction} lang={lang} />;
       case 'map':
